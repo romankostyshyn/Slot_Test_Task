@@ -52,6 +52,7 @@ public class GameField : MonoBehaviour
 
     private void Start()
     {
+        Debug.Log("test");
         CreateField();
         shuffleButton.onClick.AddListener(CreateField);
     }
