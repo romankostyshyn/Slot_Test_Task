@@ -1847,12 +1847,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d386d83572b84ce45aaacb010ac50704, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemTypes:
+  - {fileID: 11400000, guid: 1b3b1d657864ba241a96dfab107c3eab, type: 2}
+  - {fileID: 11400000, guid: cd44779d6ab72664e94db1d44bc95005, type: 2}
+  - {fileID: 11400000, guid: abfa9c49ee7419f4394a2fcf36959603, type: 2}
+  - {fileID: 11400000, guid: 0583976a3f008914c80d3c4093810691, type: 2}
+  - {fileID: 11400000, guid: c99f13ab1ab4a804b8b8c604ef7ecc2e, type: 2}
+  - {fileID: 11400000, guid: 9b6234afa321ac2458942e1a677a5921, type: 2}
+  - {fileID: 11400000, guid: 45d5499af43beca4abb6c29224ca9fd5, type: 2}
+  - {fileID: 11400000, guid: 0783f9b8fbbef434da0bdd3775645326, type: 2}
   rows:
   - {fileID: 6535699853369292457}
   - {fileID: 406463839}
   - {fileID: 1884052487}
   - {fileID: 746919980}
   - {fileID: 271500502}
+  tweenDuration: 0.3
   shuffleButton: {fileID: 1812518806}
 --- !u!1001 &6535699853369292455
 PrefabInstance:
