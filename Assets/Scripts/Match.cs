@@ -8,7 +8,7 @@ public class Match
 
     public readonly TileData[] Tiles;
 
-    public Match(TileData origin, TileData[] horizontal, TileData[] vertical)
+    public Match(TileData origin, TileData[] horizontal, TileData[] vertical, TileData[] diagonal)
     {
         TypeId = origin.TypeId;
 
@@ -37,6 +37,14 @@ public class Match
             Tiles[0] = origin;
 
             vertical.CopyTo(Tiles, 1);
+        }
+        else if (diagonal.Length >= 2 )
+        {
+            Tiles = new TileData[diagonal.Length + 1];
+
+            Tiles[0] = origin;
+
+            diagonal.CopyTo(Tiles, 1);
         }
         
         else Tiles = null;

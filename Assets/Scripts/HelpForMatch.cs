@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HelpForMatch
+public static class HelpForMatch
 {
-    public static (TileData[], TileData[]) GetConnections(int originX, int originY, TileData[,] tiles)
+    public static (TileData[], TileData[], TileData[]) GetConnections(int originX, int originY, TileData[,] tiles)
     {
         var origin = tiles[originX, originY];
 
@@ -13,6 +14,7 @@ public class HelpForMatch
 
         var horizontalConnections = new List<TileData>();
         var verticalConnections = new List<TileData>();
+        var diagonalConnections = new List<TileData>();
 
         for (var x = originX - 1; x >= 0; x--)
         {
@@ -49,8 +51,19 @@ public class HelpForMatch
 
             verticalConnections.Add(other);
         }
+        
+        for (var x = originX + 1; x < width; x++)
+        {
+            if (originY == height - 1) break;
+            
+            var other = tiles[x, originY + 1];
 
-        return (horizontalConnections.ToArray(), verticalConnections.ToArray());
+            if (other.TypeId != origin.TypeId) break;
+
+            diagonalConnections.Add(other);
+        }
+
+        return (horizontalConnections.ToArray(), verticalConnections.ToArray(), diagonalConnections.ToArray());
     }
 
     public static Match FindBestMatch(TileData[,] tiles)
@@ -63,9 +76,9 @@ public class HelpForMatch
             {
                 var tile = tiles[x, y];
 
-                var (h, v) = GetConnections(x, y, tiles);
+                var (h, v,d) = GetConnections(x, y, tiles);
 
-                var match = new Match(tile, h, v);
+                var match = new Match(tile, h, v, d);
 
                 if (match.Score < 0) continue;
 
