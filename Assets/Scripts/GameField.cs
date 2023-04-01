@@ -55,7 +55,7 @@ public class GameField : MonoBehaviour
         CreateField();
         shuffleButton.onClick.AddListener(CreateField);
     }
-    
+
     private Tile[] GetTiles(IList<TileData> tileData)
     {
         var length = tileData.Count;
@@ -74,7 +74,7 @@ public class GameField : MonoBehaviour
         _isMatching = true;
 
         var match = HelpForMatch.FindBestMatch(Matrix);
-                                   
+        
         while (match != null)
         {
             didMatch = true;
@@ -110,7 +110,12 @@ public class GameField : MonoBehaviour
 
             OnMatch?.Invoke(Array.Find(itemTypes, tileType => tileType.id == match.TypeId), match.Tiles.Length);
 
-            match = null;
+            match = HelpForMatch.FindBestMatch(Matrix);
+			
+			for (int i = 0; i < match.Tiles.Length; i++)
+			{  
+				Debug.Log($"{match.Tiles[i].X}, {match.Tiles[i].Y}");
+			}
         }
 
         _isMatching = false;
