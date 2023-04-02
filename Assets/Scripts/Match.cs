@@ -5,6 +5,10 @@ public class Match
     public readonly int TypeId;
 
     public readonly int Score;
+    
+    public readonly float HorizontalMultiplier;
+    public readonly float VerticalMultiplier;
+    public readonly float DiagonalMultiplier;
 
     public readonly TileData[] Tiles;
 
@@ -22,19 +26,23 @@ public class Match
 
             vertical.CopyTo(Tiles, horizontal.Length + 1);
         }
-        else if (horizontal.Length >= 1)
+        else if (horizontal.Length >= 2)
         {
             Tiles = new TileData[horizontal.Length + 1];
 
             Tiles[0] = origin;
 
+            HorizontalMultiplier = Tiles[0].HorMultiplier;
+
             horizontal.CopyTo(Tiles, 1);
         }
-        else if (vertical.Length >= 1)
+        else if (vertical.Length >= 2)
         {
             Tiles = new TileData[vertical.Length + 1];
 
             Tiles[0] = origin;
+            
+            VerticalMultiplier = Tiles[0].VertMultiplier;
 
             vertical.CopyTo(Tiles, 1);
         }
@@ -43,6 +51,8 @@ public class Match
             Tiles = new TileData[diagonalLeft.Length + 1];
 
             Tiles[0] = origin;
+            
+            DiagonalMultiplier = Tiles[0].DiagMultiplier;
 
             diagonalLeft.CopyTo(Tiles, 1);
         }
@@ -51,6 +61,8 @@ public class Match
             Tiles = new TileData[diagonalRight.Length + 1];
 
             Tiles[0] = origin;
+            
+            DiagonalMultiplier = Tiles[0].DiagMultiplier;
 
             diagonalRight.CopyTo(Tiles, 1);
         }

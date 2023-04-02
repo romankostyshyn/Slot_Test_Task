@@ -32,7 +32,7 @@ public static class HelpForMatch
             var other = tiles[x, originY];
 
             if (other.TypeId != origin.TypeId) break;
-
+            
             horizontalConnections.Add(other);
         }
 

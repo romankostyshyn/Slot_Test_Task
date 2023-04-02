@@ -14,4 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 1
   value: 10
+  horizontalMultiplier: 1.9
+  verticalMultiplier: 2.3
+  diagonalMultiplier: 2.5
   sprite: {fileID: 21300000, guid: 4a7f2f0ee8b59054f9ee01d8cfb93dff, type: 3}

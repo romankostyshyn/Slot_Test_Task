@@ -25,7 +25,7 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public TileData Data => new TileData(x, y, _item.id);
+    public TileData Data => new TileData(x, y, _item.id, _item.horizontalMultiplier, _item.verticalMultiplier, _item.diagonalMultiplier);
 
     // public Tile Left => x > 0 ? GameField.Instance.Tiles[x - 1, y] : null;
     // public Tile Top => y > 0 ? GameField.Instance.Tiles[x, y - 1] : null;
