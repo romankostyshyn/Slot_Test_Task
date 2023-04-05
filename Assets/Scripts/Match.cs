@@ -15,8 +15,20 @@ public class Match
     public Match(TileData origin, TileData[] horizontal, TileData[] vertical, TileData[] diagonalLeft, TileData[] diagonalRight)
     {
         TypeId = origin.TypeId;
+        
+        if (horizontal.Length >= 2 && vertical.Length >= 2 && diagonalRight.Length >= 2)
+        {
+            Tiles = new TileData[horizontal.Length + vertical.Length + diagonalRight.Length];
 
-        if (horizontal.Length >= 2 && vertical.Length >= 2)
+            Tiles[0] = origin;
+
+            horizontal.CopyTo(Tiles, 1);
+            
+            vertical.CopyTo(Tiles, 1);
+            
+            diagonalRight.CopyTo(Tiles, horizontal.Length + 1);
+        }
+        else if (horizontal.Length >= 2 && vertical.Length >= 2)
         {
             Tiles = new TileData[horizontal.Length + vertical.Length + 1];
 
@@ -25,6 +37,26 @@ public class Match
             horizontal.CopyTo(Tiles, 1);
 
             vertical.CopyTo(Tiles, horizontal.Length + 1);
+        }
+        else if (horizontal.Length >= 2 && diagonalLeft.Length >= 2)
+        {
+            Tiles = new TileData[horizontal.Length + diagonalLeft.Length + 1];
+
+            Tiles[0] = origin;
+
+            horizontal.CopyTo(Tiles, 1);
+            
+            diagonalLeft.CopyTo(Tiles, horizontal.Length + 1);
+        }
+        else if (horizontal.Length >= 2 && diagonalRight.Length >= 2)
+        {
+            Tiles = new TileData[horizontal.Length + diagonalRight.Length + 1];
+
+            Tiles[0] = origin;
+
+            horizontal.CopyTo(Tiles, 1);
+            
+            diagonalRight.CopyTo(Tiles, horizontal.Length + 1);
         }
         else if (horizontal.Length >= 2)
         {

@@ -62,7 +62,7 @@ public class GameField : MonoBehaviour
     {
         stackText.SetText($"{score}");
         CreateField();
-        shuffleButton.onClick.AddListener(CreateField);
+        shuffleButton.onClick.AddListener(CreateTestField);
     }
 
     private Tile[] GetTiles(IList<TileData> tileData)
@@ -146,6 +146,37 @@ public class GameField : MonoBehaviour
                 tile.Item = itemTypes[Random.Range(0, itemTypes.Length)];
 
                 //Tiles[x, y] = tile;
+            }
+        }
+
+        await TryMatchAsync();
+    }
+
+    private async void CreateTestField()
+    {
+        if (_isMatching) return;
+
+        for (var y = 0; y < rows.Length; y++)
+        {
+            for (var x = 0; x < rows.Max(row => row.tiles.Length); x++)
+            {
+                var tile = GetTile(x, y);
+                
+                tile.x = x;
+                tile.y = y;
+                
+                // if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
+                //     tile.x == 0 && tile.y == 1 || tile.x == 0 && tile.y == 2)
+                // {
+                //     tile.Item = itemTypes[0];
+                // }
+                
+                if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
+                    tile.x == 0 && tile.y == 1 || tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 1 ||
+                    tile.x == 0 && tile.y == 2 || tile.x == 1 && tile.y == 2 || tile.x == 2 && tile.y == 2)
+                {
+                    tile.Item = itemTypes[0];
+                }
             }
         }
 

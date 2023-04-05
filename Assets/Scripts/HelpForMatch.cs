@@ -63,6 +63,24 @@ public static class HelpForMatch
             diagonalLeftConnections.Add(other);
         }
         
+        for (int x = originX - 1, y = originY - 1; x >= 0 && y >= 0; x--, y--)
+        {
+            var other = tiles[x, y];
+
+            if (other.TypeId != origin.TypeId) break;
+
+            diagonalLeftConnections.Add(other);
+        }
+        
+        for (int x = originX - 1, y = originY + 1; x >= 0 && y < height; x--, y++)
+        {
+            var other = tiles[x, y];
+
+            if (other.TypeId != origin.TypeId) break;
+
+            diagonalRightConnections.Add(other);
+        }
+        
         for (int x = originX + 1, y = originY - 1; x < width && y >= 0; x++, y--)
         {
             var other = tiles[x, y];
