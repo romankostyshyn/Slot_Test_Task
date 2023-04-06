@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -18,15 +17,14 @@ public class GameField : MonoBehaviour
     [SerializeField] private Button minusButton;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button maxBetButton;
+    [SerializeField] private Item[] itemTypes;
 
     [SerializeField] private float tweenDuration;
     [SerializeField] private float score;
     [SerializeField] private float currentBet;
     [SerializeField] private float maxBet;
     [SerializeField] private float minStepBet;
-
-    [SerializeField] private Item[] itemTypes;
-
+    
     [SerializeField] public Row[] rows;
 
     public Button shuffleButton;
@@ -34,10 +32,6 @@ public class GameField : MonoBehaviour
     public Tile[,] Tiles { get; private set; }
 
     private bool _isMatching;
-
-    //public int Width => Tiles.GetLength(0);
-    //public int Height => Tiles.GetLength(1);
-
     public event Action<Item, int> OnMatch;
 
     private TileData[,] Matrix
@@ -117,10 +111,10 @@ public class GameField : MonoBehaviour
 
             await deflateSequence.Play()
                 .AsyncWaitForCompletion();
-            
+
             score -= match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier;
             stackText.SetText($"{score}");
-            
+
             if (score <= minStepBet)
             {
                 stackText.SetText($"{score}");
@@ -152,8 +146,6 @@ public class GameField : MonoBehaviour
 
     private async void CreateField()
     {
-        //Tiles = new Tile[rows.Max(row => row.tiles.Length), rows.Length];
-
         if (score < currentBet)
         {
             currentBet = minStepBet;
@@ -174,8 +166,6 @@ public class GameField : MonoBehaviour
                 tile.y = y;
 
                 tile.Item = itemTypes[Random.Range(0, itemTypes.Length)];
-
-                //Tiles[x, y] = tile;
             }
         }
 
@@ -191,16 +181,16 @@ public class GameField : MonoBehaviour
             for (var x = 0; x < rows.Max(row => row.tiles.Length); x++)
             {
                 var tile = GetTile(x, y);
-                
+
                 tile.x = x;
                 tile.y = y;
-                
+
                 if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
                     tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 2)
                 {
                     tile.Item = itemTypes[0];
                 }
-                
+
                 // if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
                 //     tile.x == 0 && tile.y == 1 || tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 1 ||
                 //     tile.x == 0 && tile.y == 2 || tile.x == 1 && tile.y == 2 || tile.x == 2 && tile.y == 2)
@@ -229,7 +219,7 @@ public class GameField : MonoBehaviour
             currentBetText.SetText($"{currentBet}");
             return;
         }
-        
+
         currentBet -= minStepBet;
         currentBetText.SetText($"{currentBet}");
     }
@@ -237,9 +227,9 @@ public class GameField : MonoBehaviour
     private void IncreaseBet()
     {
         if (currentBet >= score || currentBet >= maxBet) return;
-        
+
         if (currentBet + minStepBet > score) return;
-        
+
         currentBet += minStepBet;
         currentBetText.SetText($"{currentBet}");
     }
@@ -247,14 +237,14 @@ public class GameField : MonoBehaviour
     private void MaxBet()
     {
         if (score < maxBet && score < minStepBet) return;
-            
+
         if (score < maxBet && score > minStepBet)
         {
             currentBet = score;
             currentBetText.SetText($"{currentBet}");
             return;
         }
-        
+
         currentBet = maxBet;
         currentBetText.SetText($"{currentBet}");
     }

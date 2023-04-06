@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +5,7 @@ using UnityEngine.UI;
 public class Popup : MonoBehaviour
 {
     [SerializeField] private Button okButton;
-    public TMP_Text descriptionText;
+    [SerializeField] private TMP_Text descriptionText;
 
     public static Popup Instance;
 
@@ -18,6 +15,7 @@ public class Popup : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
+
         Instance = this;
     }
 

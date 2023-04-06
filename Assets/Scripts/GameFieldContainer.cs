@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using EasyUI.PickerWheelUI;
 using UnityEngine.UI;
@@ -8,7 +7,7 @@ public class GameFieldContainer : MonoBehaviour
     [SerializeField] private GameObject backgroundFortuneWheel;
     [SerializeField] private Button spinButton;
     [SerializeField] private Popup popup;
-    
+
     [SerializeField] public PickerWheel pickerWheel;
 
     public static GameFieldContainer Instance;
@@ -19,6 +18,7 @@ public class GameFieldContainer : MonoBehaviour
         {
             GameObject.Destroy(this.gameObject);
         }
+
         Instance = this;
     }
 

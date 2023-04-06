@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class Match
 {
     public readonly int TypeId;
@@ -34,9 +32,9 @@ public class Match
             Tiles = new TileData[horizontal.Length + vertical.Length + 1];
 
             Tiles[0] = origin;
-            
+
             HorizontalMultiplier = Tiles[0].HorMultiplier;
-            
+
             VerticalMultiplier = Tiles[0].VertMultiplier;
 
             horizontal.CopyTo(Tiles, 1);

@@ -1,12 +1,9 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 
 public static class HelpForMatch
 {
-    public static (TileData[], TileData[], TileData[], TileData[]) GetConnections(int originX, int originY, TileData[,] tiles)
+    public static (TileData[], TileData[], TileData[], TileData[]) GetConnections(int originX, int originY,
+        TileData[,] tiles)
     {
         var origin = tiles[originX, originY];
 
@@ -32,7 +29,7 @@ public static class HelpForMatch
             var other = tiles[x, originY];
 
             if (other.TypeId != origin.TypeId) break;
-            
+
             horizontalConnections.Add(other);
         }
 
@@ -62,7 +59,7 @@ public static class HelpForMatch
 
             diagonalLeftConnections.Add(other);
         }
-        
+
         for (int x = originX - 1, y = originY - 1; x >= 0 && y >= 0; x--, y--)
         {
             var other = tiles[x, y];
@@ -71,7 +68,7 @@ public static class HelpForMatch
 
             diagonalLeftConnections.Add(other);
         }
-        
+
         for (int x = originX - 1, y = originY + 1; x >= 0 && y < height; x--, y++)
         {
             var other = tiles[x, y];
@@ -80,7 +77,7 @@ public static class HelpForMatch
 
             diagonalRightConnections.Add(other);
         }
-        
+
         for (int x = originX + 1, y = originY - 1; x < width && y >= 0; x++, y--)
         {
             var other = tiles[x, y];
@@ -90,7 +87,8 @@ public static class HelpForMatch
             diagonalRightConnections.Add(other);
         }
 
-        return (horizontalConnections.ToArray(), verticalConnections.ToArray(), diagonalLeftConnections.ToArray(), diagonalRightConnections.ToArray());
+        return (horizontalConnections.ToArray(), verticalConnections.ToArray(), diagonalLeftConnections.ToArray(),
+            diagonalRightConnections.ToArray());
     }
 
     public static Match FindBestMatch(TileData[,] tiles)
@@ -103,7 +101,7 @@ public static class HelpForMatch
             {
                 var tile = tiles[x, y];
 
-                var (h,v,dl,dr) = GetConnections(x, y, tiles);
+                var (h, v, dl, dr) = GetConnections(x, y, tiles);
 
                 var match = new Match(tile, h, v, dl, dr);
 

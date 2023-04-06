@@ -4,7 +4,7 @@ public class Move : MonoBehaviour
 {
     public readonly int X1;
     public readonly int Y1;
-		
+
     public readonly int X2;
     public readonly int Y2;
 
@@ -12,7 +12,7 @@ public class Move : MonoBehaviour
     {
         X1 = x1;
         Y1 = y1;
-			
+
         X2 = x2;
         Y2 = y2;
     }
