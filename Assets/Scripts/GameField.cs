@@ -11,15 +11,19 @@ using Random = UnityEngine.Random;
 
 public class GameField : MonoBehaviour
 {
-    //public static GameField Instance { get; private set; }
+    public static GameField Instance;
 
     [SerializeField] private TMP_Text stackText;
+    [SerializeField] private TMP_Text currentBetText;
     [SerializeField] private Button minusButton;
     [SerializeField] private Button plusButton;
     [SerializeField] private Button maxBetButton;
 
     [SerializeField] private float tweenDuration;
     [SerializeField] private float score;
+    [SerializeField] private float currentBet;
+    [SerializeField] private float maxBet;
+    [SerializeField] private float minStepBet;
 
     [SerializeField] private Item[] itemTypes;
 
@@ -53,16 +57,20 @@ public class GameField : MonoBehaviour
         }
     }
 
-    public void Awake()
+    private void Awake()
     {
-        //Instance = this;
+        Instance = this;
     }
 
     private void Start()
     {
         stackText.SetText($"{score}");
-        CreateField();
-        shuffleButton.onClick.AddListener(CreateTestField);
+        currentBetText.SetText($"{currentBet}");
+        plusButton.onClick.AddListener(IncreaseBet);
+        minusButton.onClick.AddListener(ReduceBet);
+        maxBetButton.onClick.AddListener(MaxBet);
+        //CreateField();
+        shuffleButton.onClick.AddListener(CreateField);
     }
 
     private Tile[] GetTiles(IList<TileData> tileData)
@@ -84,6 +92,12 @@ public class GameField : MonoBehaviour
 
         var match = HelpForMatch.FindBestMatch(Matrix);
 
+        if (match == null)
+        {
+            score -= currentBet;
+            stackText.SetText($"{score}");
+        }
+
         var originalScale = new Vector3();
 
         while (match != null)
@@ -103,9 +117,17 @@ public class GameField : MonoBehaviour
 
             await deflateSequence.Play()
                 .AsyncWaitForCompletion();
-
-            score += match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier;
+            
+            score -= match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier;
             stackText.SetText($"{score}");
+            
+            if (score <= minStepBet)
+            {
+                stackText.SetText($"{score}");
+                currentBet = minStepBet;
+                currentBetText.SetText($"{currentBet}");
+                GameFieldContainer.Instance.WheelState(true);
+            }
 
             var inflateSequence = DOTween.Sequence();
 
@@ -131,6 +153,14 @@ public class GameField : MonoBehaviour
     private async void CreateField()
     {
         //Tiles = new Tile[rows.Max(row => row.tiles.Length), rows.Length];
+
+        if (score < currentBet)
+        {
+            currentBet = minStepBet;
+            currentBetText.SetText($"{currentBet}");
+            GameFieldContainer.Instance.WheelState(true);
+            return;
+        }
 
         if (_isMatching) return;
 
@@ -165,22 +195,68 @@ public class GameField : MonoBehaviour
                 tile.x = x;
                 tile.y = y;
                 
-                // if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
-                //     tile.x == 0 && tile.y == 1 || tile.x == 0 && tile.y == 2)
-                // {
-                //     tile.Item = itemTypes[0];
-                // }
-                
                 if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
-                    tile.x == 0 && tile.y == 1 || tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 1 ||
-                    tile.x == 0 && tile.y == 2 || tile.x == 1 && tile.y == 2 || tile.x == 2 && tile.y == 2)
+                    tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 2)
                 {
                     tile.Item = itemTypes[0];
                 }
+                
+                // if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
+                //     tile.x == 0 && tile.y == 1 || tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 1 ||
+                //     tile.x == 0 && tile.y == 2 || tile.x == 1 && tile.y == 2 || tile.x == 2 && tile.y == 2)
+                // {
+                //     tile.Item = itemTypes[0];
+                // }
             }
         }
 
         await TryMatchAsync();
+    }
+
+    public void UpdateScore(int reward)
+    {
+        score += reward;
+        stackText.SetText($"{score}");
+    }
+
+    private void ReduceBet()
+    {
+        if (currentBet <= minStepBet) return;
+
+        if (currentBet - minStepBet < minStepBet)
+        {
+            currentBet = minStepBet;
+            currentBetText.SetText($"{currentBet}");
+            return;
+        }
+        
+        currentBet -= minStepBet;
+        currentBetText.SetText($"{currentBet}");
+    }
+
+    private void IncreaseBet()
+    {
+        if (currentBet >= score || currentBet >= maxBet) return;
+        
+        if (currentBet + minStepBet > score) return;
+        
+        currentBet += minStepBet;
+        currentBetText.SetText($"{currentBet}");
+    }
+
+    private void MaxBet()
+    {
+        if (score < maxBet && score < minStepBet) return;
+            
+        if (score < maxBet && score > minStepBet)
+        {
+            currentBet = score;
+            currentBetText.SetText($"{currentBet}");
+            return;
+        }
+        
+        currentBet = maxBet;
+        currentBetText.SetText($"{currentBet}");
     }
 
     private Tile GetTile(int x, int y) => rows[y].tiles[x];
