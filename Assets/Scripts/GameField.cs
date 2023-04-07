@@ -112,6 +112,8 @@ public class GameField : MonoBehaviour
             await deflateSequence.Play()
                 .AsyncWaitForCompletion();
 
+            Debug.Log($"HM: {match.HorizontalMultiplier}, VM: {match.VerticalMultiplier}, DM: {match.DiagonalMultiplier} ");
+            
             score -= match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier;
             stackText.SetText($"{score}");
 

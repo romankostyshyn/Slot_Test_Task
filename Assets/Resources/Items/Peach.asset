@@ -17,4 +17,4 @@ MonoBehaviour:
   horizontalMultiplier: 2.5
   verticalMultiplier: 2.9
   diagonalMultiplier: 3.1
-  sprite: {fileID: 21300000, guid: 94bc5d8691b9f844fa649267ffca7089, type: 3}
+  sprite: {fileID: 2143596172, guid: ef2f151197a131046b92bfe2375d4520, type: 3}

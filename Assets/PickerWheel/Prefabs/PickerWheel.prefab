@@ -438,10 +438,6 @@ MonoBehaviour:
   wheelCircle: {fileID: 224131085478986710}
   wheelPiecePrefab: {fileID: 1013547879587396, guid: a10fef7bc23b5a64a929387e97c9b936, type: 3}
   wheelPiecesParent: {fileID: 224747704442984086}
-  audioSource: {fileID: 0}
-  tickAudioClip: {fileID: 0}
-  volume: 0.5
-  pitch: 1
   spinDuration: 20
   wheelSize: 1
   wheelPieces:
@@ -537,14 +533,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6351644, g: 0.64565086, b: 0.6544118, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: e7ec3340202c146438f4406d0c3f4cea, type: 3}
+  m_Sprite: {fileID: -744344554, guid: 7365520363ff3d1429a782313ae18d09, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
