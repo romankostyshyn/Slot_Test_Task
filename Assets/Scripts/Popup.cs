@@ -28,6 +28,7 @@ public class Popup : MonoBehaviour
     public void PopupState(bool value, int reward)
     {
         descriptionText.SetText(reward > 0 ? $"You win {reward} coins!" : "Maybe you win another time");
+        GameFieldContainer.Instance.SpinButtonState(!value);
         this.gameObject.SetActive(value);
         GameFieldContainer.Instance.WheelState(value);
     }

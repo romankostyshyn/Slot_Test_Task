@@ -34,12 +34,18 @@ public class GameFieldContainer : MonoBehaviour
         backgroundFortuneWheel.SetActive(value);
     }
 
+    public void SpinButtonState(bool value)
+    {
+        spinButton.interactable = value;
+    }
+
     private void WheelSpin()
     {
         pickerWheel.Spin();
         pickerWheel.OnSpinEnd(wheelPiece =>
         {
             GameField.Instance.UpdateScore(wheelPiece.Amount);
+            SpinButtonState(false);
             Popup.Instance.PopupState(true, wheelPiece.Amount);
         });
     }

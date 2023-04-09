@@ -63,7 +63,6 @@ public class GameField : MonoBehaviour
         plusButton.onClick.AddListener(IncreaseBet);
         minusButton.onClick.AddListener(ReduceBet);
         maxBetButton.onClick.AddListener(MaxBet);
-        //CreateField();
         shuffleButton.onClick.AddListener(CreateField);
     }
 
@@ -112,9 +111,7 @@ public class GameField : MonoBehaviour
             await deflateSequence.Play()
                 .AsyncWaitForCompletion();
 
-            Debug.Log($"HM: {match.HorizontalMultiplier}, VM: {match.VerticalMultiplier}, DM: {match.DiagonalMultiplier} ");
-            
-            score -= match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier;
+            score += currentBet * (match.HorizontalMultiplier + match.VerticalMultiplier + match.DiagonalMultiplier);
             stackText.SetText($"{score}");
 
             if (score <= minStepBet)
@@ -168,37 +165,6 @@ public class GameField : MonoBehaviour
                 tile.y = y;
 
                 tile.Item = itemTypes[Random.Range(0, itemTypes.Length)];
-            }
-        }
-
-        await TryMatchAsync();
-    }
-
-    private async void CreateTestField()
-    {
-        if (_isMatching) return;
-
-        for (var y = 0; y < rows.Length; y++)
-        {
-            for (var x = 0; x < rows.Max(row => row.tiles.Length); x++)
-            {
-                var tile = GetTile(x, y);
-
-                tile.x = x;
-                tile.y = y;
-
-                if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
-                    tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 2)
-                {
-                    tile.Item = itemTypes[0];
-                }
-
-                // if (tile.x == 0 && tile.y == 0 || tile.x == 1 && tile.y == 0 || tile.x == 2 && tile.y == 0 ||
-                //     tile.x == 0 && tile.y == 1 || tile.x == 1 && tile.y == 1 || tile.x == 2 && tile.y == 1 ||
-                //     tile.x == 0 && tile.y == 2 || tile.x == 1 && tile.y == 2 || tile.x == 2 && tile.y == 2)
-                // {
-                //     tile.Item = itemTypes[0];
-                // }
             }
         }
 
